@@ -1,0 +1,156 @@
+:root{
+  --bg: #F2EFE9;
+  --ink: #1B2A4A;
+  --text: #201D1A;
+  --text-soft: #5C574C;
+  --accent: #3F6650;
+  --gold: #B08948;
+  --card-bg: #FFFFFF;
+  --border: #D9D2C4;
+  --radius: 6px;
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "IBM Plex Sans", -apple-system, sans-serif;
+  line-height: 1.55;
+}
+
+h1, h2, h3{
+  font-family: "Source Serif 4", Georgia, serif;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 0.4em 0;
+}
+
+a{ color: var(--accent); }
+
+.wrap{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ---------- topo / cabeçalho ---------- */
+.topbar{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 14px;
+  margin-bottom: 36px;
+}
+.topbar .brand{
+  font-family: "Source Serif 4", serif;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+.topbar nav a{
+  margin-left: 18px;
+  text-decoration: none;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+.topbar nav a:hover{ color: var(--accent); }
+
+/* ---------- lista de matérias (index) ---------- */
+.shelf{
+  display: grid;
+  gap: 14px;
+}
+.subject-card{
+  display: block;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  text-decoration: none;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.subject-card:hover{ transform: translateX(3px); }
+.subject-card h3{ margin-bottom: 4px; font-size: 1.15rem; }
+.subject-card p{ margin: 0; color: var(--text-soft); font-size: 0.92rem; }
+
+/* ---------- flashcards ---------- */
+.flashcard{
+  perspective: 1000px;
+  height: 160px;
+  margin: 16px 0;
+  cursor: pointer;
+}
+.flashcard-inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+.flashcard.flipped .flashcard-inner{
+  transform: rotateY(180deg);
+}
+.flashcard-face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  font-size: 1.05rem;
+}
+.flashcard-face.front{ background: var(--card-bg); }
+.flashcard-face.back{
+  background: var(--ink);
+  color: #fff;
+  transform: rotateY(180deg);
+}
+.flashcard-hint{
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  margin-top: -8px;
+}
+
+/* ---------- quiz ---------- */
+.quiz-question{
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 16px 0;
+}
+.quiz-question p.prompt{ font-weight: 600; margin-bottom: 12px; }
+.quiz-option{
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+.quiz-option:hover{ border-color: var(--accent); }
+.quiz-option.correct{ background: #E6EFE9; border-color: var(--accent); }
+.quiz-option.incorrect{ background: #F5E6E3; border-color: #B0543F; }
+.quiz-feedback{ font-size: 0.88rem; margin-top: 8px; color: var(--text-soft); }
+
+/* ---------- rodapé ---------- */
+.footnote{
+  margin-top: 60px;
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}

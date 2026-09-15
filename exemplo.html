@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exemplo — Estudos</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="brand">Estudos</span>
+      <nav><a href="index.html">← voltar ao índice</a></nav>
+    </div>
+
+    <h1>Exemplo de matéria</h1>
+    <p style="color:var(--text-soft);">
+      Esta página mostra os três blocos que você pode usar em qualquer matéria: resumo, flashcards e quiz.
+      Copie este arquivo e adapte o conteúdo pra cada assunto novo.
+    </p>
+
+    <h2>Resumo</h2>
+    <p>
+      Aqui entra a explicação do conteúdo — texto corrido, parágrafos, listas, o que for preciso.
+      Pode ter quantas seções quiser, com <code>&lt;h2&gt;</code> separando os tópicos.
+    </p>
+
+    <h2>Flashcards</h2>
+    <p style="color:var(--text-soft); font-size:0.9rem;">Toque no cartão pra virar.</p>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-face front">O que é a Lei de Newton da Inércia?</div>
+        <div class="flashcard-face back">Um corpo em repouso ou movimento retilíneo uniforme permanece assim, a menos que uma força atue sobre ele.</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-face front">Fórmula da 2ª Lei de Newton?</div>
+        <div class="flashcard-face back">F = m × a</div>
+      </div>
+    </div>
+
+    <h2>Quiz rápido</h2>
+    <div class="quiz-question" data-answer="b">
+      <p class="prompt">1. Qual grandeza mede a resistência de um corpo à mudança de movimento?</p>
+      <button class="quiz-option" data-val="a">Velocidade</button>
+      <button class="quiz-option" data-val="b">Massa (inércia)</button>
+      <button class="quiz-option" data-val="c">Aceleração</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-question" data-answer="a">
+      <p class="prompt">2. Se a força resultante sobre um corpo é zero, o que acontece com sua velocidade?</p>
+      <button class="quiz-option" data-val="a">Permanece constante</button>
+      <button class="quiz-option" data-val="b">Aumenta</button>
+      <button class="quiz-option" data-val="c">Vai a zero</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <p class="footnote">
+      Página de exemplo — duplique este arquivo pra criar novas matérias.
+    </p>
+  </div>
+
+<script>
+document.querySelectorAll('.quiz-question').forEach(q => {
+  const correct = q.dataset.answer;
+  const feedback = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('correct') || btn.classList.contains('incorrect')) return;
+      const isCorrect = btn.dataset.val === correct;
+      btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+      feedback.textContent = isCorrect ? 'Certo!' : 'Não é essa — tenta rever o resumo acima.';
+      if (!isCorrect){
+        q.querySelector(`[data-val="${correct}"]`).classList.add('correct');
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
