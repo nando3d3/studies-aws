@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 — Fundamentos de IA e ML (AIF-C01)</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="brand">Estudos AWS</span>
+      <nav>
+        <a href="ai-practitioner.html">← capítulos</a>
+        <a href="index.html">índice</a>
+      </nav>
+    </div>
+
+    <h1>02 — Fundamentos de IA e ML (Domínio 1, 20%)</h1>
+
+    <div class="content">
+
+      <h2>A hierarquia de aninhamento</h2>
+      <pre><code>Artificial Intelligence
+└── Machine Learning
+    └── Deep Learning (redes neurais)
+        └── Generative AI
+            └── Large Language Models</code></pre>
+
+      <table>
+        <thead><tr><th>Termo</th><th>Definição</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Artificial Intelligence</strong></td><td>Máquinas realizando tarefas que imitam o comportamento humano ou normalmente exigem inteligência humana. IA <em>simula</em> inteligência (imita comportamentos); não <em>emula</em> (não replica o mecanismo exato).</td></tr>
+          <tr><td><strong>Machine Learning</strong></td><td>Sistemas que melhoram numa tarefa a partir de dados, sem serem reprogramados explicitamente para cada novo caso.</td></tr>
+          <tr><td><strong>Deep Learning</strong></td><td>ML usando redes neurais artificiais com múltiplas camadas. Regra prática: <strong>3 ou mais camadas ocultas = deep</strong>.</td></tr>
+          <tr><td><strong>Generative AI</strong></td><td>IA que <em>cria</em> conteúdo novo — texto, imagem, áudio, vídeo, estruturas moleculares — em vez de só analisar dados existentes.</td></tr>
+          <tr><td><strong>Large Language Model</strong></td><td>Um foundation model construído sobre a arquitetura Transformer que prevê o próximo token de texto.</td></tr>
+        </tbody>
+      </table>
+
+      <p>
+        <strong>IA vs. IA Generativa na prova:</strong> a IA tradicional <em>entende, classifica e decide</em> sobre dados existentes;
+        a IA generativa <em>produz saída nova, nunca vista antes</em>. IA generativa é um subconjunto, não um substituto.
+      </p>
+
+      <h3>Modalidades de IA generativa</h3>
+      <table>
+        <thead><tr><th>Modalidade</th><th>Exemplo de saída</th></tr></thead>
+        <tbody>
+          <tr><td>Texto</td><td>Artigos, resumos, código</td></tr>
+          <tr><td>Visão</td><td>Imagens e vídeo</td></tr>
+          <tr><td>Áudio</td><td>Fala, música</td></tr>
+          <tr><td>Molecular</td><td>Compostos candidatos para descoberta de fármacos</td></tr>
+        </tbody>
+      </table>
+      <p>Modelos <strong>multimodais</strong> lidam com mais de uma modalidade (ex: entrada de imagem + texto).</p>
+
+      <h2>Tipos de problema de aprendizado</h2>
+
+      <h3>Os três tipos primários</h3>
+      <table>
+        <thead><tr><th>Tipo</th><th>Dados</th><th>Guiado por</th><th>Tarefas típicas</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Supervisionado</strong></td><td>Rotulados</td><td>Tarefa</td><td>Classificação, regressão</td></tr>
+          <tr><td><strong>Não supervisionado</strong></td><td>Não rotulados</td><td>Dados</td><td>Clusterização, associação, redução de dimensionalidade</td></tr>
+          <tr><td><strong>Por reforço</strong></td><td>Sem dataset pré-existente</td><td>Recompensa/feedback</td><td>Jogos, robótica, navegação autônoma</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Aprendizado supervisionado é mais preciso, mas exige rotulagem cara antecipadamente. O não supervisionado encontra
+        estrutura de graça, mas precisa de um humano para interpretar se os padrões descobertos significam algo.
+      </p>
+      <p>
+        Aprendizado por reforço usa um <strong>agente</strong> agindo em um <strong>ambiente</strong>, recebendo <strong>recompensas</strong>
+        ou penalidades, aprendendo por tentativa e erro. Não há dataset de treino de partida.
+      </p>
+
+      <h3>Aprendizado híbrido</h3>
+      <table>
+        <thead><tr><th>Tipo</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td>Semi-supervisionado</td><td>Um pequeno conjunto rotulado mais um grande conjunto não rotulado</td></tr>
+          <tr><td>Auto-supervisionado</td><td>O modelo gera seus próprios rótulos a partir dos dados (como LLMs são pré-treinados)</td></tr>
+          <tr><td>Multi-instância</td><td>Exemplos são agrupados em "bags" rotuladas em vez de rotulados individualmente</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Técnicas de aprendizado</h3>
+      <table>
+        <thead><tr><th>Técnica</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Transfer learning</strong></td><td>Um modelo treinado numa tarefa é reaproveitado como ponto de partida para uma tarefa relacionada. É a base conceitual do fine-tuning.</td></tr>
+          <tr><td><strong>Ensemble learning</strong></td><td>Vários modelos são treinados e suas previsões combinadas (bagging, boosting, stacking). Útil quando a qualidade dos dados é um problema.</td></tr>
+          <tr><td><strong>Active learning</strong></td><td>O modelo consulta um humano durante o treino quando está incerto.</td></tr>
+          <tr><td><strong>Online learning</strong></td><td>O modelo se atualiza continuamente conforme novos dados chegam.</td></tr>
+          <tr><td><strong>Multitask learning</strong></td><td>Um modelo resolve vários problemas relacionados ao mesmo tempo.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Inferência estatística</h3>
+      <table>
+        <thead><tr><th>Tipo</th><th>Direção</th></tr></thead>
+        <tbody>
+          <tr><td>Indutiva</td><td>Evidência específica → regra geral</td></tr>
+          <tr><td>Dedutiva</td><td>Regra geral → resultado específico</td></tr>
+          <tr><td>Transdutiva</td><td>Entradas específicas → previsões específicas, sem formar uma regra geral</td></tr>
+        </tbody>
+      </table>
+
+      <h2>As quatro formas clássicas de problema de ML</h2>
+      <p>Decore esta tabela — ela recorre constantemente.</p>
+      <table>
+        <thead><tr><th>Problema</th><th>Rotulado?</th><th>Saída</th><th>Exemplo</th><th>Algoritmos</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Regressão</strong></td><td>Sim</td><td>Número contínuo</td><td>Prever a temperatura de amanhã; preço de casa</td><td>Linear, polinomial, SVR, árvore de decisão, random forest de regressão</td></tr>
+          <tr><td><strong>Classificação</strong></td><td>Sim</td><td>Classe discreta</td><td>Spam vs. não spam; chuva vs. sol</td><td>Regressão logística, KNN, SVM, Naive Bayes, árvore de decisão, random forest, redes neurais</td></tr>
+          <tr><td><strong>Clusterização</strong></td><td><strong>Não</strong></td><td>Grupos</td><td>Segmentar clientes em coortes comportamentais</td><td>K-means, DBSCAN, K-modes</td></tr>
+          <tr><td><strong>Associação</strong></td><td>Não</td><td>Relações entre variáveis</td><td>"Quem comprou pão também comprou manteiga"</td><td>Apriori, FP-growth</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>Redução de dimensionalidade</strong> é uma quinta forma, geralmente um passo de pré-processamento: reduzir o número
+        de features preservando informação. Algoritmos: PCA, LDA, SVD, t-SNE.
+      </p>
+      <p>
+        Pegadinha comum: se a questão diz que os dados <em>não têm rótulos</em>, a resposta é clusterização ou associação,
+        nunca classificação ou regressão.
+      </p>
+
+      <h2>Divisões de ML por forma do problema</h2>
+      <table>
+        <thead><tr><th>Divisão</th><th>Quando usar</th><th>Exemplos</th></tr></thead>
+        <tbody>
+          <tr><td>ML clássico</td><td>Dado é simples, features são claras, custo importa</td><td>Supervisionado, não supervisionado</td></tr>
+          <tr><td>Aprendizado por reforço</td><td>Não há dados; o sistema aprende agindo</td><td>IA de jogos, navegação de robôs</td></tr>
+          <tr><td>Métodos ensemble</td><td>Qualidade dos dados é ruim</td><td>Bagging, boosting, stacking</td></tr>
+          <tr><td>Redes neurais / deep learning</td><td>Dado é complexo, features não são óbvias</td><td>CNN, RNN, GAN, MLP, autoencoders</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Redes neurais</h2>
+      <p>Uma rede neural é um grafo de <strong>neurônios (nós)</strong> organizados em camadas, conectados por arestas com <strong>pesos</strong>.</p>
+      <pre><code>Camada de entrada → Camada(s) oculta(s) → Camada de saída</code></pre>
+
+      <table>
+        <thead><tr><th>Conceito</th><th>Definição</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Feed-forward network (FNN)</strong></td><td>Conexões nunca formam ciclo; dados fluem numa direção</td></tr>
+          <tr><td><strong>Backpropagation</strong></td><td>Após um passo à frente, o erro é propagado para trás para ajustar os pesos. É assim que a rede aprende.</td></tr>
+          <tr><td><strong>Loss function</strong></td><td>Compara a previsão com a verdade de referência para produzir um valor de erro</td></tr>
+          <tr><td><strong>Activation function</strong></td><td>Aplicada num nó para determinar seu sinal de saída</td></tr>
+          <tr><td><strong>Dense layer</strong></td><td>Camada com número crescente de nós</td></tr>
+          <tr><td><strong>Sparse layer</strong></td><td>Camada com número decrescente de nós</td></tr>
+          <tr><td><strong>Perceptron</strong></td><td>A rede neural mais simples — um classificador binário com camada de entrada e de saída</td></tr>
+        </tbody>
+      </table>
+      <p>
+        A camada de entrada não transforma dados; é só um ponto de entrada. O número de nós de entrada é igual
+        à dimensionalidade do vetor de entrada.
+      </p>
+
+      <h3>Funções de ativação</h3>
+      <p>
+        Funções de ativação lineares não sustentam backpropagation e não podem ser empilhadas. As não lineares podem
+        — por isso toda rede prática usa não lineares.
+      </p>
+      <table>
+        <thead><tr><th>Função</th><th>Intervalo</th><th>Notas</th></tr></thead>
+        <tbody>
+          <tr><td>Linear / Identity</td><td>Ilimitado</td><td>Sem benefício de aprendizado; derivada constante</td></tr>
+          <tr><td>Binary step</td><td>0 ou 1</td><td>A mais antiga; só classificação binária; raramente usada hoje</td></tr>
+          <tr><td><strong>Sigmoid</strong></td><td>0 a 1</td><td>Curva S suave; sofre de <strong>gradiente evanescente</strong>; ativação densa, lenta</td></tr>
+          <tr><td><strong>Tanh</strong></td><td>−1 a 1</td><td>Sigmoid escalonada, gradientes mais fortes, ainda evanesce</td></tr>
+          <tr><td><strong>ReLU</strong></td><td>0 a ∞</td><td>Rápida, ativação esparsa, a escolha padrão; sofre de <strong>dying ReLU</strong> (neurônios travados em 0)</td></tr>
+          <tr><td>Leaky ReLU</td><td>−∞ a ∞</td><td>Pequena inclinação negativa evita o dying ReLU</td></tr>
+          <tr><td>Parametric ReLU</td><td>—</td><td>Leaky ReLU com inclinação negativa aprendida/fixa (comumente 0,01)</td></tr>
+          <tr><td>ReLU-6</td><td>0 a 6</td><td>ReLU limitada no lado positivo</td></tr>
+          <tr><td>ELU</td><td>−1 a ∞</td><td>Exponencial no lado negativo; convergência mais rápida</td></tr>
+          <tr><td>Swish</td><td>—</td><td>Google Brain; alternativa suave e não monotônica à ReLU</td></tr>
+          <tr><td>Maxout</td><td>—</td><td>Retorna o máximo entre várias entradas; dobra os parâmetros</td></tr>
+          <tr><td><strong>Softmax</strong></td><td>0 a 1, soma 1</td><td>Camada de saída para classificação multiclasse; produz uma distribuição de probabilidade</td></tr>
+        </tbody>
+      </table>
+      <p>Dois problemas nomeados para reconhecer:</p>
+      <ul>
+        <li><strong>Gradiente evanescente</strong> — gradientes encolhem para perto de zero em redes profundas, então as primeiras camadas param de aprender. Associado a sigmoid e tanh.</li>
+        <li><strong>Dying ReLU</strong> — neurônios produzem zero permanentemente e param de contribuir.</li>
+      </ul>
+
+      <h2>Modelos, parâmetros e inferência</h2>
+      <table>
+        <thead><tr><th>Termo</th><th>Definição</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Algoritmo</strong></td><td>Um conjunto de instruções para realizar uma tarefa</td></tr>
+          <tr><td><strong>Modelo</strong></td><td>Uma função que recebe dados, aplica um algoritmo e produz uma previsão</td></tr>
+          <tr><td><strong>Feature</strong></td><td>Uma propriedade mensurável individual extraída de dados brutos — uma coluna em dados tabulares</td></tr>
+          <tr><td><strong>Feature engineering</strong></td><td>Extrair, limpar e transformar dados brutos em features legíveis por máquina. Modelos de ML consomem números, então texto e categorias precisam ser codificados.</td></tr>
+          <tr><td><strong>Inferência</strong></td><td>Solicitar e receber uma previsão de um modelo implantado. A saída tipicamente inclui um <strong>score de confiança</strong>.</td></tr>
+          <tr><td><strong>Ground truth</strong></td><td>Dados corretamente rotulados usados como padrão objetivo para treino e avaliação</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Parâmetros vs. hiperparâmetros</h3>
+      <p>Essa distinção é garantida na prova.</p>
+      <table>
+        <thead><tr><th></th><th>Parâmetros</th><th>Hiperparâmetros</th></tr></thead>
+        <tbody>
+          <tr><td>Onde</td><td>Internos ao modelo</td><td>Externos ao modelo</td></tr>
+          <tr><td>Definidos por</td><td><strong>Aprendidos durante o treino</strong></td><td><strong>Definidos manualmente antes do treino</strong></td></tr>
+          <tr><td>Propósito</td><td>Fazer previsões</td><td>Controlar como o treino acontece</td></tr>
+          <tr><td>Exemplos</td><td>Pesos de conexão, vieses</td><td>Taxa de aprendizado, épocas, tamanho do batch, número de camadas</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Divisões do dataset</h3>
+      <table>
+        <thead><tr><th>Divisão</th><th>Propósito</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Conjunto de treino</strong></td><td>Os dados com que o modelo aprende</td></tr>
+          <tr><td><strong>Conjunto de validação</strong></td><td>Usado durante o treino para ajustar hiperparâmetros e checar generalização</td></tr>
+          <tr><td><strong>Conjunto de teste</strong></td><td>Reservado para uma avaliação final e imparcial</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Overfitting e underfitting</h3>
+      <table>
+        <thead><tr><th>Condição</th><th>Sintoma</th><th>Correção típica</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Overfitting</strong></td><td>Excelente nos dados de treino, ruim em dados novos — decorou ruído</td><td>Mais dados, regularização, modelo mais simples, early stopping, dropout</td></tr>
+          <tr><td><strong>Underfitting</strong></td><td>Ruim em ambos treino e dados novos — modelo simples demais</td><td>Modelo mais complexo, mais features, treinar por mais tempo</td></tr>
+          <tr><td><strong>Bias (viés)</strong></td><td>Erro sistemático por suposições erradas</td><td>Geralmente associado a underfitting</td></tr>
+          <tr><td><strong>Variance (variância)</strong></td><td>Sensibilidade a flutuações nos dados de treino</td><td>Geralmente associado a overfitting</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Model drift</h3>
+      <p>
+        Um modelo em produção se degrada com o tempo conforme os dados do mundo real divergem dos dados de treino.
+        Isso é <strong>model drift</strong> (levando a <strong>model decay</strong>). O Amazon SageMaker Model Monitor detecta isso.
+      </p>
+
+      <h2>Processamento de linguagem natural</h2>
+      <p>
+        <strong>NLP</strong> fica na intersecção entre ciência da computação e linguística: entender o contexto de um
+        <strong>corpus</strong> (um grande corpo estruturado de texto).
+      </p>
+      <p>Vocabulário de pipeline que vale reconhecer:</p>
+      <table>
+        <thead><tr><th>Etapa</th><th>Termos</th></tr></thead>
+        <tbody>
+          <tr><td>Tratamento de texto</td><td>Conversão de caixa, expansão de contrações, remoção de HTML e stop words, <strong>tokenização</strong>, <strong>stemming</strong>, <strong>lematização</strong></td></tr>
+          <tr><td>Compreensão de linguagem</td><td>Marcação de classe gramatical (POS), chunking, parsing de dependência, parsing de constituintes</td></tr>
+          <tr><td>Tarefas de processamento</td><td><strong>Reconhecimento de entidades nomeadas (NER)</strong>, n-grams, análise de sentimento, extração de informação, resposta a perguntas, modelagem de tópicos</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Conceitos de dados</h2>
+
+      <h3>Rotulagem de dados e ground truth</h3>
+      <p>
+        Rotulagem é identificar dados brutos e anexar tags significativas — pré-requisito para aprendizado supervisionado.
+        O Amazon SageMaker Ground Truth é o serviço gerenciado para isso. A precisão do modelo nunca pode superar
+        a qualidade da sua ground truth.
+      </p>
+
+      <h3>Mineração de dados e CRISP-DM</h3>
+      <p><strong>Mineração de dados</strong> extrai <em>padrões e conhecimento</em> de grandes datasets — não os próprios dados.</p>
+      <p><strong>CRISP-DM</strong>, a metodologia de seis fases:</p>
+      <ol>
+        <li>Entendimento do negócio</li>
+        <li>Entendimento dos dados</li>
+        <li>Preparação dos dados</li>
+        <li>Modelagem</li>
+        <li>Avaliação</li>
+        <li>Implantação</li>
+      </ol>
+
+      <h3>Mineração de conhecimento</h3>
+      <p>
+        Usar serviços de IA para descobrir insights, relações e padrões ocultos em grandes volumes de informação.
+        Três fases:
+      </p>
+      <table>
+        <thead><tr><th>Fase</th><th>O que acontece</th><th>Serviços AWS</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Ingerir</strong></td><td>Conectar a fontes estruturadas (bancos de dados, CSV) e não estruturadas (PDF, vídeo, áudio)</td><td>S3, conectores</td></tr>
+          <tr><td><strong>Enriquecer</strong></td><td>Aplicar IA para extrair informação</td><td>Rekognition, Comprehend, Transcribe, Textract</td></tr>
+          <tr><td><strong>Explorar</strong></td><td>Disponibilizar via busca, BI, ou alimentar um LLM</td><td>Kendra, QuickSight, RAG</td></tr>
+        </tbody>
+      </table>
+      <p>Mineração de conhecimento se sobrepõe bastante a RAG.</p>
+
+      <h3>Data wrangling</h3>
+      <p>Transformar dados brutos num formato mais valioso. Seis passos:</p>
+      <ol>
+        <li>Descoberta</li>
+        <li>Estruturação</li>
+        <li>Limpeza (outliers, nulos, duplicatas, formatação)</li>
+        <li>Enriquecimento (juntar contexto adicional)</li>
+        <li>Validação (checagens de qualidade e confiabilidade)</li>
+        <li>Publicação (gravar num data store)</li>
+      </ol>
+      <p>Ferramentas AWS: <strong>SageMaker Data Wrangler</strong> (focado em ML) e <strong>AWS Glue DataBrew</strong> (uso geral).</p>
+
+      <h3>Tipos de dados</h3>
+      <pre><code>Qualitativo (qualidade)
+└── Categórico
+    ├── Binário   — dois valores (verdadeiro/falso)
+    ├── Nominal   — categorias sem ordem (cores)
+    └── Ordinal   — categorias com ordem (pequeno/médio/grande)
+
+Quantitativo (quantidade)
+└── Numérico
+    ├── Intervalar — sem zero verdadeiro (temperatura em °C)
+    └── Razão      — zero verdadeiro existe (peso, preço)</code></pre>
+
+      <h3>Papéis de dados</h3>
+      <table>
+        <thead><tr><th>Papel</th><th>Foco</th></tr></thead>
+        <tbody>
+          <tr><td>Analista de dados</td><td>Usa informação existente para produzir insight de negócio acionável</td></tr>
+          <tr><td>Cientista de dados</td><td>Matemática, estatística, modelagem preditiva, ML — prevê o futuro</td></tr>
+          <tr><td>Engenheiro de dados</td><td>Constrói a infraestrutura e pipelines que movem e armazenam dados</td></tr>
+        </tbody>
+      </table>
+
+      <h2>O fluxo de trabalho de ML da AWS</h2>
+      <p>A AWS documenta o ciclo de vida de ML como fases contendo passos:</p>
+      <ol>
+        <li><strong>Buscar (Fetch)</strong> — coletar dados de um repositório, dataset público, ou sistema de origem</li>
+        <li><strong>Limpar (Clean)</strong> — normalizar valores inconsistentes</li>
+        <li><strong>Preparar (Prepare)</strong> — transformar e criar features</li>
+        <li><strong>Treinar (Train)</strong> — selecionar um algoritmo e treinar o modelo</li>
+        <li><strong>Avaliar (Evaluate)</strong> — medir precisão contra dados reservados</li>
+        <li><strong>Implantar (Deploy)</strong> — hospedar o modelo para inferência</li>
+        <li><strong>Avaliar continuamente</strong> — monitorar drift, coletar ground truth, retreinar</li>
+      </ol>
+      <p>Espere questões de ordenação sobre essa sequência.</p>
+
+      <h2>Ecossistema Jupyter</h2>
+      <table>
+        <thead><tr><th>Ferramenta</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td>Jupyter Notebook</td><td>Documentos web combinando código ao vivo, texto narrativo, equações e visualizações</td></tr>
+          <tr><td>JupyterLab</td><td>A interface de próxima geração: notebooks mais terminal, editor e navegador de arquivos</td></tr>
+          <tr><td>JupyterHub</td><td>Servidor multi-usuário para times e turmas</td></tr>
+          <tr><td>SageMaker Studio</td><td>Ambiente JupyterLab hospedado da AWS</td></tr>
+          <tr><td>SageMaker Studio Lab</td><td>Notebooks gratuitos e independentes — <strong>fora da sua VPC</strong>, portanto inadequado para dados regulados</td></tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <p class="footnote">
+      Capítulo 2 de 11 — <a href="ai-practitioner.html">voltar aos capítulos</a>.
+    </p>
+  </div>
+</body>
+</html>

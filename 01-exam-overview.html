@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 — Visão geral da prova (AIF-C01)</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="brand">Estudos AWS</span>
+      <nav>
+        <a href="ai-practitioner.html">← capítulos</a>
+        <a href="index.html">índice</a>
+      </nav>
+    </div>
+
+    <h1>01 — Visão geral da prova (AIF-C01)</h1>
+
+    <div class="content">
+
+      <h2>A certificação</h2>
+      <table>
+        <thead><tr><th>Item</th><th>Valor</th></tr></thead>
+        <tbody>
+          <tr><td>Código da prova</td><td>AIF-C01</td></tr>
+          <tr><td>Nome</td><td>AWS Certified AI Practitioner</td></tr>
+          <tr><td>Nível</td><td>Foundational</td></tr>
+          <tr><td>Pré-requisito recomendado</td><td>AWS Cloud Practitioner (CLF-C02) — não obrigatório, mas conhecimento assumido</td></tr>
+          <tr><td>Aplicação</td><td>Pearson VUE, presencial em centro de testes ou online com monitoramento</td></tr>
+          <tr><td>Duração</td><td>120 minutos de prova (~150 minutos com check-in, NDA, pesquisa)</td></tr>
+          <tr><td>Questões</td><td>65 no total — <strong>50 valem nota</strong>, <strong>15 não valem (piloto)</strong></td></tr>
+          <tr><td>Pontuação</td><td>Escala de 100–1000, <strong>aprovação = 700</strong></td></tr>
+          <tr><td>Recertificação</td><td>3 anos</td></tr>
+          <tr><td>Tempo de estudo típico</td><td>~10 horas em média (5 se experiente, 20 se novo no assunto)</td></tr>
+        </tbody>
+      </table>
+
+      <p>
+        Questões que não valem nota são indistinguíveis das que valem, e não têm penalidade.
+        Se uma questão parecer absurdamente obscura, pode muito bem ser uma questão piloto — responda e siga em frente.
+      </p>
+
+      <h2>Formatos de questão</h2>
+      <ul>
+        <li>Múltipla escolha (1 correta entre 4)</li>
+        <li>Múltipla resposta (2+ corretas entre 5+)</li>
+        <li>Ordenação (organizar passos em sequência)</li>
+        <li>Correspondência (parear itens entre duas listas)</li>
+        <li>Estudo de caso (um cenário, várias questões)</li>
+      </ul>
+      <p>Os três últimos formatos são mais novos nas provas da AWS. Pratique-os explicitamente.</p>
+
+      <h2>Domínios e pesos</h2>
+      <table>
+        <thead><tr><th>#</th><th>Domínio</th><th>Peso</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Fundamentos de IA e ML</td><td>20%</td></tr>
+          <tr><td>2</td><td>Fundamentos de IA Generativa</td><td>24%</td></tr>
+          <tr><td>3</td><td>Aplicações de Foundation Models</td><td>28%</td></tr>
+          <tr><td>4</td><td>Diretrizes para IA Responsável</td><td>14%</td></tr>
+          <tr><td>5</td><td>Segurança, Compliance e Governança para Soluções de IA</td><td>14%</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Os domínios 2 e 3 juntos passam de metade da prova, e são, de longe, sobre <strong>Amazon Bedrock</strong>,
+        engenharia de prompt, RAG e fine-tuning. É onde o tempo de estudo deve se concentrar.
+      </p>
+
+      <h2>Explicitamente fora do escopo</h2>
+      <p>O guia da prova afirma que você não será cobrado em:</p>
+      <ul>
+        <li>Desenvolver ou programar algoritmos de ML</li>
+        <li>Implementar técnicas de engenharia de features de dados</li>
+        <li>Realizar implementação de ajuste de hiperparâmetros</li>
+        <li>Construir e implantar pipelines de IA/ML</li>
+        <li>Fazer matemática ou estatística</li>
+      </ul>
+      <p>Espere questões conceituais e de "qual serviço se encaixa neste cenário", não código.</p>
+
+      <h2>Como ler questões de cenário</h2>
+      <p>A maioria das questões de serviço se resume a um exercício de correspondência. Treine estes eixos:</p>
+      <ol>
+        <li><strong>Qual modalidade?</strong> Texto → Comprehend / Bedrock. Imagem ou vídeo → Rekognition. Documentos → Textract. Fala de saída → Polly. Fala de entrada → Transcribe. Pares de idiomas → Translate.</li>
+        <li><strong>Serviço de IA gerenciado ou construir do zero?</strong> Se a questão menciona "sem expertise em ML", "totalmente gerenciado" ou "pré-treinado", a resposta é um serviço de IA, não o SageMaker.</li>
+        <li><strong>Precisa de modelo customizado?</strong> SageMaker para ML clássico; modelos customizados do Bedrock / fine-tuning para foundation models.</li>
+        <li><strong>Precisa embasar em dados privados?</strong> RAG com Bedrock Knowledge Bases — não fine-tuning. Fine-tuning muda <em>comportamento/estilo/tarefa</em>; RAG fornece <em>fatos</em>.</li>
+        <li><strong>Palavra de governança/IA responsável aparece?</strong> Associe a Clarify (viés/explicabilidade), Model Monitor (drift), Guardrails (filtro de conteúdo), A2I (revisão humana), AI Service Cards (documentação de serviço), Model Cards (documentação de modelo).</li>
+      </ol>
+
+      <h2>Plano de estudo (14 dias, 1–2 h/dia)</h2>
+      <table>
+        <thead><tr><th>Dias</th><th>Foco</th></tr></thead>
+        <tbody>
+          <tr><td>1–2</td><td><code>02-ai-ml-fundamentals.md</code> — terminologia, tipos de aprendizado, redes neurais</td></tr>
+          <tr><td>3–4</td><td><code>03-generative-ai-fundamentals.md</code> — transformers, tokens, embeddings, ciclo de vida de FM</td></tr>
+          <tr><td>5–7</td><td><code>04-amazon-bedrock.md</code> — o arquivo de maior valor. Leia duas vezes.</td></tr>
+          <tr><td>8</td><td><code>05-sagemaker.md</code></td></tr>
+          <tr><td>9</td><td><code>06-aws-ai-services.md</code></td></tr>
+          <tr><td>10</td><td><code>07-data-analytics-and-stores.md</code></td></tr>
+          <tr><td>11</td><td><code>08-responsible-ai.md</code> + <code>09-security-compliance-governance.md</code></td></tr>
+          <tr><td>12</td><td><code>10-evaluation-metrics.md</code> + <code>11-cheatsheet.md</code></td></tr>
+          <tr><td>13–14</td><td><code>../questions/</code> — banco de questões completo e as duas provas práticas</td></tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <p class="footnote">
+      Capítulo 1 de 11 — <a href="ai-practitioner.html">voltar aos capítulos</a>.
+    </p>
+  </div>
+</body>
+</html>

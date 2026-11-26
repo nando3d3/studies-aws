@@ -3,38 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Estudos</title>
+<title>Certificações AWS — Estudos</title>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="wrap">
     <div class="topbar">
-      <span class="brand">Estudos</span>
+      <span class="brand">Estudos AWS</span>
       <nav><a href="#">início</a></nav>
     </div>
 
-    <h1>Minhas matérias</h1>
+    <h1>Certificações AWS</h1>
     <p style="color:var(--text-soft); margin-bottom:28px;">
-      Clique numa matéria pra abrir o material — resumo, flashcards e quiz.
+      Clique numa certificação pra abrir o material — resumo, flashcards e quiz.
     </p>
 
+    <h2>Fundamentos</h2>
     <div class="shelf">
-      <a class="subject-card" href="exemplo.html">
-        <h3>Exemplo — como usar esta página</h3>
-        <p>Modelo de página com flashcards e quiz interativos.</p>
+      <a class="subject-card" href="cloud-practitioner.html">
+        <h3>AWS Certified Cloud Practitioner <span style="color:var(--gold); font-weight:500;">(CLF-C02)</span></h3>
+        <p>Visão geral da nuvem AWS: conceitos, serviços principais, segurança e cobrança.</p>
       </a>
+      <a class="subject-card" href="ai-practitioner.html">
+        <h3>AWS Certified AI Practitioner <span style="color:var(--gold); font-weight:500;">(AIF-C01)</span></h3>
+        <p>Fundamentos de IA/ML na AWS: conceitos, serviços de IA generativa e uso responsável.</p>
+      </a>
+    </div>
 
-      <!--
-        Pra adicionar uma nova matéria:
-        1. Copie o arquivo exemplo.html e renomeie (ex: historia.html)
-        2. Edite o conteúdo dentro dele
-        3. Adicione um novo bloco <a class="subject-card"> aqui apontando pro novo arquivo
-      -->
+    <h2>Associate</h2>
+    <div class="shelf">
+      <a class="subject-card" href="solutions-architect-associate.html">
+        <h3>Solutions Architect – Associate <span style="color:var(--gold); font-weight:500;">(SAA-C03)</span></h3>
+        <p>Projetar arquiteturas resilientes, performáticas, seguras e econômicas na AWS.</p>
+      </a>
+      <a class="subject-card" href="developer-associate.html">
+        <h3>Developer – Associate <span style="color:var(--gold); font-weight:500;">(DVA-C02)</span></h3>
+        <p>Desenvolvimento, deploy e debug de aplicações na AWS.</p>
+      </a>
+      <a class="subject-card" href="sysops-administrator-associate.html">
+        <h3>SysOps Administrator – Associate <span style="color:var(--gold); font-weight:500;">(SOA-C02)</span></h3>
+        <p>Operação, monitoramento e manutenção de sistemas na AWS.</p>
+      </a>
+      <a class="subject-card" href="data-engineer-associate.html">
+        <h3>Data Engineer – Associate <span style="color:var(--gold); font-weight:500;">(DEA-C01)</span></h3>
+        <p>Ingestão, transformação, orquestração e governança de dados na AWS.</p>
+      </a>
+      <a class="subject-card" href="machine-learning-engineer-associate.html">
+        <h3>Machine Learning Engineer – Associate <span style="color:var(--gold); font-weight:500;">(MLA-C01)</span></h3>
+        <p>Construção, treinamento, deploy e operação de modelos de ML na AWS.</p>
+      </a>
+    </div>
+
+    <h2>Professional</h2>
+    <div class="shelf">
+      <a class="subject-card" href="solutions-architect-professional.html">
+        <h3>Solutions Architect – Professional <span style="color:var(--gold); font-weight:500;">(SAP-C02)</span></h3>
+        <p>Arquiteturas complexas, migração, otimização de custos e multi-conta.</p>
+      </a>
+      <a class="subject-card" href="devops-engineer-professional.html">
+        <h3>DevOps Engineer – Professional <span style="color:var(--gold); font-weight:500;">(DOP-C02)</span></h3>
+        <p>CI/CD, automação, monitoramento e governança em escala na AWS.</p>
+      </a>
+    </div>
+
+    <h2>Specialty</h2>
+    <div class="shelf">
+      <a class="subject-card" href="security-specialty.html">
+        <h3>Security – Specialty <span style="color:var(--gold); font-weight:500;">(SCS-C02)</span></h3>
+        <p>Segurança de dados, infraestrutura, identidade e resposta a incidentes.</p>
+      </a>
+      <a class="subject-card" href="advanced-networking-specialty.html">
+        <h3>Advanced Networking – Specialty <span style="color:var(--gold); font-weight:500;">(ANS-C01)</span></h3>
+        <p>Redes híbridas, conectividade complexa e automação de rede na AWS.</p>
+      </a>
+      <a class="subject-card" href="machine-learning-specialty.html">
+        <h3>Machine Learning – Specialty <span style="color:var(--gold); font-weight:500;">(MLS-C01)</span></h3>
+        <p>Engenharia de dados, modelagem e implementação de ML na AWS.</p>
+      </a>
     </div>
 
     <p class="footnote">
-      Toda matéria nova vira um arquivo <code>.html</code> na mesma pasta, listado aqui no índice.
+      Toda certificação nova vira um arquivo <code>.html</code> na mesma pasta, listado aqui no índice.
+      Use o <a href="exemplo.html">exemplo.html</a> como modelo de página (resumo, flashcards e quiz).
     </p>
   </div>
 </body>

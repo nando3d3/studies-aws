@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03 — Fundamentos de IA Generativa (AIF-C01)</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="brand">Estudos AWS</span>
+      <nav>
+        <a href="ai-practitioner.html">← capítulos</a>
+        <a href="index.html">índice</a>
+      </nav>
+    </div>
+
+    <h1>03 — Fundamentos de IA Generativa (Domínio 2, 24%)</h1>
+
+    <div class="content">
+
+      <h2>Foundation models</h2>
+      <p>
+        Um <strong>foundation model (FM)</strong> é um modelo grande e de propósito geral, pré-treinado num dataset vasto
+        e diverso, projetado para ser adaptado a muitas tarefas subsequentes. Sinônimos usados de forma intercambiável:
+        <em>base model</em>, <em>modelo pré-treinado</em>.
+      </p>
+      <p>
+        Um <strong>large language model (LLM)</strong> é um foundation model que implementa a arquitetura Transformer e
+        trabalha principalmente na modalidade de texto. Nem todo foundation model é um LLM — o Stable Diffusion é um
+        foundation model para imagens.
+      </p>
+
+      <h3>O ciclo de vida do foundation model</h3>
+      <ol>
+        <li><strong>Seleção de dados</strong> — reunir um corpus grande, diverso e licenciado</li>
+        <li><strong>Pré-treino</strong> — treino auto-supervisionado no corpus, produzindo um modelo base</li>
+        <li><strong>Fine-tuning / adaptação</strong> — especializar para uma tarefa, domínio ou comportamento</li>
+        <li><strong>Alinhamento</strong> — RLHF ou similar, para tornar as saídas úteis e inofensivas</li>
+        <li><strong>Avaliação</strong> — medir precisão, toxicidade, robustez</li>
+        <li><strong>Implantação</strong> — servir atrás de um endpoint</li>
+        <li><strong>Monitoramento / feedback</strong> — coletar uso real, iterar</li>
+      </ol>
+
+      <h3>Custos e trade-offs de foundation models</h3>
+      <table>
+        <thead><tr><th>Vantagem</th><th>Trade-off</th></tr></thead>
+        <tbody>
+          <tr><td>Não exige dados de treino nem expertise em ML pra começar</td><td>Custo de inferência escala com tokens</td></tr>
+          <tr><td>Capacidade ampla entre tarefas</td><td>Pode alucinar; sem conhecimento de dados privados ou recentes</td></tr>
+          <tr><td>Rapidez pra gerar valor</td><td>Controle limitado sobre o comportamento do modelo base</td></tr>
+          <tr><td>Opções multimodais disponíveis</td><td>Modelos maiores custam mais e respondem mais devagar</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Escolher um modelo é um trade-off entre <strong>custo, latência, modalidade, tamanho da janela de contexto,
+        licenciamento e desempenho na tarefa</strong>. Um modelo pequeno como o Claude Haiku é mais barato e rápido;
+        um grande como o Opus é mais capaz. A prova favorece "escolha o menor modelo que atenda ao requisito".
+      </p>
+
+      <h2>Arquitetura Transformer</h2>
+      <p>
+        Introduzida por pesquisadores do Google no artigo <em>Attention Is All You Need</em>. Substituiu RNNs e CNNs
+        para NLP porque processa sequências em paralelo em vez de passo a passo, o que tornou viável escalar para
+        bilhões de parâmetros.
+      </p>
+      <p>Dois componentes:</p>
+      <table>
+        <thead><tr><th>Componente</th><th>Papel</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Encoder</strong></td><td>Lê e constrói um entendimento contextual da entrada</td></tr>
+          <tr><td><strong>Decoder</strong></td><td>Gera tokens de saída um de cada vez, condicionado à saída do encoder e ao que já foi produzido</td></tr>
+        </tbody>
+      </table>
+      <p>Dois mecanismos fazem isso funcionar:</p>
+      <ul>
+        <li><strong>Multi-head attention</strong> — vários cálculos de atenção rodam em paralelo, cada um capturando um tipo diferente de relação entre tokens</li>
+        <li><strong>Positional encoding</strong> — como os tokens são processados em paralelo, vetores de posição são somados aos embeddings para o modelo saber a ordem das palavras</li>
+      </ul>
+
+      <h3>Tipos de atenção</h3>
+      <table>
+        <thead><tr><th>Tipo</th><th>Descrição</th><th>Onde</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Self-attention</strong></td><td>Cada elemento de uma sequência atende a todos os outros elementos da mesma sequência</td><td>Encoder</td></tr>
+          <tr><td><strong>Cross-attention</strong></td><td>Elementos de uma sequência atendem a uma sequência diferente</td><td>Decoder atendendo à saída do encoder (ex: tradução)</td></tr>
+          <tr><td><strong>Multi-head attention</strong></td><td>Vários heads de atenção em paralelo</td><td>Ambos</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Atenção é calculada com <strong>Query, Key, Value (Q/K/V)</strong> — conceitualmente uma busca: a query é
+        comparada com as keys, e os values correspondentes são retornados ponderados pela relevância.
+      </p>
+
+      <h2>Tokens</h2>
+      <p>
+        Um <strong>token</strong> é um pedaço de texto — aproximadamente uma palavra ou fragmento de palavra — mapeado
+        para um ID inteiro único do vocabulário do modelo. Vocabulários típicos têm 30.000 a 100.000+ tokens.
+      </p>
+      <table>
+        <thead><tr><th>Tokenizador</th><th>Usado por</th></tr></thead>
+        <tbody>
+          <tr><td>Byte Pair Encoding (BPE)</td><td>GPT-3</td></tr>
+          <tr><td>WordPiece</td><td>BERT</td></tr>
+          <tr><td>SentencePiece</td><td>T5, GPT-3.5</td></tr>
+        </tbody>
+      </table>
+      <p>Serviços gerenciados como o Bedrock tokenizam por você.</p>
+      <p>
+        <strong>Por que tokens importam comercialmente:</strong> memória e computação crescem com o tamanho da sequência,
+        e provedores cobram por token de entrada e por token de saída, geralmente a taxas diferentes. Entrada e saída
+        dividem um único orçamento — um prompt muito longo deixa menos espaço pra resposta. A mitigação padrão para
+        conversas longas é resumir os turnos anteriores e alimentar o resumo adiante.
+      </p>
+
+      <h3>Janela de contexto</h3>
+      <p>
+        A <strong>janela de contexto</strong> é o número total de tokens que um modelo pode considerar numa requisição
+        — entrada mais saída combinadas. Tudo que você injeta (prompt de sistema, documentos recuperados, histórico
+        da conversa, exemplos few-shot) consome essa janela.
+      </p>
+
+      <h2>Embeddings e espaço vetorial</h2>
+      <p>
+        Um <strong>embedding</strong> é um vetor numérico representando um pedaço de dado (texto, imagem, áudio) de
+        forma que itens semanticamente similares fiquem próximos num espaço de alta dimensionalidade.
+      </p>
+      <ul>
+        <li>Um <strong>vetor</strong> tem magnitude e direção; um <strong>vector space model</strong> representa documentos como vetores de modo que a distância codifique similaridade.</li>
+        <li><strong>Dimensionalidade</strong> é o número de valores no vetor. O modelo de embedding a determina, e ela precisa bater com a configuração do índice do seu vector store. Exemplo: <code>all-MiniLM-L6-v2</code> produz 384 dimensões.</li>
+        <li>Modelos de embedding diferentes capturam relações diferentes — similaridade ortográfica, semântica, significado específico de domínio.</li>
+        <li>Similaridade é medida com <strong>similaridade de cosseno</strong>, distância euclidiana, ou produto escalar. Cosseno é o padrão comum.</li>
+      </ul>
+      <p>Modelos de embedding no Bedrock: <strong>Amazon Titan Text Embeddings (v1, v2)</strong>, <strong>Cohere Embed English</strong>, <strong>Cohere Embed Multilingual</strong>.</p>
+
+      <h2>Parâmetros de inferência</h2>
+      <table>
+        <thead><tr><th>Parâmetro</th><th>Efeito</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Temperature</strong></td><td>Controla aleatoriedade. 0 é determinístico e repetitivo; ~0,5 é um padrão equilibrado; 1,0 é maximamente criativo e pode degradar em nonsense.</td></tr>
+          <tr><td><strong>Top-p (nucleus sampling)</strong></td><td>Considera apenas o menor conjunto de tokens cuja probabilidade acumulada excede p. Menor = mais focado.</td></tr>
+          <tr><td><strong>Top-k</strong></td><td>Considera apenas os k tokens seguintes mais prováveis.</td></tr>
+          <tr><td><strong>Max tokens / tamanho da resposta</strong></td><td>Limita o tamanho da saída gerada.</td></tr>
+          <tr><td><strong>Stop sequences</strong></td><td>Strings que, quando geradas, encerram a resposta.</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Para tarefas factuais e determinísticas (classificação, extração, geração de SQL) use uma
+        <strong>temperature baixa</strong>. Para escrita criativa, aumente-a.
+      </p>
+
+      <h2>Engenharia de prompt</h2>
+
+      <h3>As três técnicas centrais</h3>
+      <p>São as que mais importam pra prova.</p>
+      <table>
+        <thead><tr><th>Técnica</th><th>Definição</th><th>Quando usar</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Zero-shot</strong></td><td>Dar a tarefa com instruções mas <strong>sem exemplos</strong></td><td>Tarefas simples e bem entendidas</td></tr>
+          <tr><td><strong>Few-shot</strong></td><td>Fornecer <strong>vários exemplos de entrada/saída</strong> antes da entrada real</td><td>Você precisa de um formato de saída específico ou a tarefa é ambígua</td></tr>
+          <tr><td><strong>Chain of Thought (CoT)</strong></td><td>Pedir ao modelo para raciocinar <strong>passo a passo</strong> antes de responder</td><td>Raciocínio multi-etapa, matemática, lógica. Ajuda modelos menores desproporcionalmente.</td></tr>
+        </tbody>
+      </table>
+      <p><em>One-shot</em> é few-shot com exatamente um exemplo.</p>
+
+      <h3>Elementos de um bom prompt</h3>
+      <ul>
+        <li><strong>Instruções</strong> — o que fazer</li>
+        <li><strong>Contexto</strong> — background que o modelo precisa</li>
+        <li><strong>Dados de entrada</strong> — a coisa sobre a qual agir</li>
+        <li><strong>Indicador de saída</strong> — o formato exigido</li>
+        <li><strong>Negative prompting</strong> — declarar explicitamente o que não fazer ("não adicione informação que não está presente no texto")</li>
+      </ul>
+
+      <h3>Práticas específicas de modelo</h3>
+      <p>Engenharia de prompt não é universal entre provedores.</p>
+      <ul>
+        <li>O <strong>Anthropic Claude</strong> responde fortemente a <strong>tags XML</strong> delimitando seções (<code>&lt;context&gt;</code>, <code>&lt;question&gt;</code>, <code>&lt;document&gt;</code>). Claude também se beneficia bastante de Chain of Thought.</li>
+        <li>Modelos estilo OpenAI não dependem de tags XML da mesma forma.</li>
+        <li>Provedores diferentes usam formatos de requisição inteiramente diferentes (coberto em <code>04-amazon-bedrock.md</code>).</li>
+      </ul>
+
+      <h3>Riscos de prompt</h3>
+      <table>
+        <thead><tr><th>Risco</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Prompt injection</strong></td><td>Entrada do usuário contém instruções que sequestram o comportamento do modelo</td></tr>
+          <tr><td><strong>Jailbreaking</strong></td><td>Injeção direta que sobrepõe ou revela o prompt de sistema</td></tr>
+          <tr><td><strong>Prompt leaking</strong></td><td>Induzir o modelo a revelar seu prompt de sistema ou contexto confidencial</td></tr>
+          <tr><td><strong>Poisoning / hijacking</strong></td><td>Conteúdo malicioso plantado em documentos recuperados ou dados de treino</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Mitigações: separar instruções de sistema do conteúdo do usuário, aplicar guardrails, restringir privilégios
+        de backend, adicionar revisão humana, e validar qualquer coisa recuperada de fontes externas.
+      </p>
+
+      <h2>Retrieval Augmented Generation (RAG)</h2>
+      <p>
+        <strong>RAG</strong> recupera dados externos relevantes no momento da consulta e os injeta no prompt para que
+        o foundation model responda com fatos nos quais nunca foi treinado.
+      </p>
+      <pre><code>Pergunta do usuário
+  → Gerar embedding da pergunta
+  → Buscar os trechos mais relevantes na fonte de conhecimento
+  → Inserir esses trechos no prompt como contexto
+  → Foundation model gera uma resposta embasada</code></pre>
+
+      <p>Pontos-chave para a prova:</p>
+      <ul>
+        <li>RAG <strong>não modifica o modelo</strong>. Nenhum peso muda. Só muda o que está na janela de contexto.</li>
+        <li>RAG <strong>não se limita a vector stores</strong>. Um pipeline de RAG pode recuperar da internet, de um banco relacional, de um banco de grafos, ou de um banco de documentos. Busca vetorial é só a implementação mais comum para recuperação semântica.</li>
+        <li>RAG é como você lida com <strong>dados privados, proprietários ou que mudam com frequência</strong>, e como você reduz alucinação embasando respostas em fontes citáveis.</li>
+        <li>O limite do RAG é a janela de contexto e o custo dos tokens que você injeta.</li>
+      </ul>
+
+      <h3>RAG vs. fine-tuning vs. engenharia de prompt</h3>
+      <p>A questão de cenário mais provável desta prova.</p>
+      <table>
+        <thead><tr><th>Abordagem</th><th>Custo</th><th>Muda os pesos?</th><th>Quando usar</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Engenharia de prompt</strong></td><td>Mais baixo</td><td>Não</td><td>O modelo base já consegue fazer isso com instruções melhores</td></tr>
+          <tr><td><strong>RAG</strong></td><td>Baixo–médio</td><td>Não</td><td>Você precisa de <strong>fatos</strong> atuais, privados ou citáveis</td></tr>
+          <tr><td><strong>Fine-tuning</strong></td><td>Alto</td><td>Sim</td><td>Você precisa de um <strong>comportamento, formato, tom ou tarefa</strong> específico que o modelo base faz mal</td></tr>
+          <tr><td><strong>Continued pre-training</strong></td><td>Mais alto</td><td>Sim</td><td>Você precisa ensinar um <strong>domínio de conhecimento geral</strong> inteiramente novo</td></tr>
+          <tr><td><strong>Treinar do zero</strong></td><td>Extremo</td><td>N/A</td><td>Quase nunca é a resposta certa nesta prova</td></tr>
+        </tbody>
+      </table>
+      <p>Mnemônico: <strong>RAG adiciona conhecimento, fine-tuning adiciona habilidade.</strong></p>
+
+      <h2>Fine-tuning</h2>
+      <p>
+        Fine-tuning retreina os pesos de um modelo pré-treinado num dataset menor e rotulado. A saída é um novo
+        conjunto de <strong>pesos de modelo</strong>, não código de modelo novo.
+      </p>
+
+      <h3>Pelo que o dataset ensina</h3>
+      <table>
+        <thead><tr><th>Tipo</th><th>Dados</th><th>Propósito</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Instruction fine-tuning</strong></td><td>Pares prompt/completion</td><td>Ensinar o modelo a seguir um padrão de instrução específico</td></tr>
+          <tr><td><strong>Domain-specific fine-tuning</strong></td><td>Corpus de domínio</td><td>Adaptar vocabulário e conhecimento a uma vertical</td></tr>
+          <tr><td><strong>Continued pre-training</strong></td><td><strong>Dados não rotulados</strong></td><td>Ampliar conhecimento geral num domínio</td></tr>
+          <tr><td><strong>Supervised fine-tuning (SFT)</strong></td><td><strong>Dados rotulados</strong></td><td>Melhorar desempenho numa tarefa específica</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>Rotulado vs. não rotulado é o discriminador que a prova usa:</strong> fine-tuning = dados rotulados,
+        específico da tarefa. Continued (continuous) pre-training = dados não rotulados, conhecimento geral.
+      </p>
+
+      <h3>Por quanto do modelo muda</h3>
+      <table>
+        <thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Full fine-tuning</strong></td><td>Atualiza todos os pesos. Mais caro, mais capaz.</td></tr>
+          <tr><td><strong>Parameter-Efficient Fine-Tuning (PEFT)</strong></td><td>Congela a maior parte do modelo e treina um pequeno conjunto de parâmetros adicionados. Muito mais barato. <strong>LoRA</strong> é o método PEFT mais conhecido.</td></tr>
+          <tr><td><strong>Last-layer fine-tuning</strong></td><td>Congela tudo exceto a camada final</td></tr>
+          <tr><td><strong>Pruning</strong></td><td>Remove parâmetros para reduzir o modelo</td></tr>
+        </tbody>
+      </table>
+
+      <h3>RLHF</h3>
+      <p>
+        <strong>Reinforcement Learning from Human Feedback</strong> alinha um modelo com preferências humanas: humanos
+        ranqueiam saídas do modelo, um modelo de recompensa é treinado sobre esses ranqueamentos, e o modelo é
+        otimizado contra o modelo de recompensa. É isso que transforma um modelo pré-treinado bruto num assistente
+        útil. Relacionado: o Amazon A2I e os fluxos de avaliação humana do Bedrock fornecem o componente de julgamento
+        humano.
+      </p>
+
+      <h2>Agentes</h2>
+      <p>
+        Um <strong>agente</strong> é um LLM ao qual foi dada autonomia para decidir quais ações tomar. Ele pode chamar
+        <strong>ferramentas (tools)</strong> (funções, APIs, Lambda), consultar knowledge bases, e encadear múltiplos
+        passos para satisfazer uma requisição.
+      </p>
+      <table>
+        <thead><tr><th>Conceito</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tool use / function calling</strong></td><td>O modelo escolhe invocar uma função externa e fornece os argumentos</td></tr>
+          <tr><td><strong>Agência</strong></td><td>O modelo decide a sequência de passos; você não a programou</td></tr>
+          <tr><td><strong>Orquestração / workflow</strong></td><td>Você define explicitamente a sequência; o modelo preenche os passos generativos</td></tr>
+        </tbody>
+      </table>
+      <p>Agêntico (Bedrock Agents) versus orquestrado (Bedrock Prompt Flows, cadeias LangChain) é uma comparação recorrente.</p>
+
+      <h2>Arquiteturas de modelo que vale nomear</h2>
+      <table>
+        <thead><tr><th>Arquitetura</th><th>Propósito</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Transformer</strong></td><td>LLMs modernos; baseado em atenção</td></tr>
+          <tr><td><strong>GAN</strong> (Generative Adversarial Network)</td><td>Um gerador e um discriminador competem; usado para imagens sintéticas</td></tr>
+          <tr><td><strong>VAE</strong> (Variational Autoencoder)</td><td>Codifica dados num espaço latente e decodifica de volta; usado em geração</td></tr>
+          <tr><td><strong>Diffusion model</strong></td><td>Remove ruído iterativamente de ruído aleatório até formar uma imagem; como o Stable Diffusion funciona</td></tr>
+          <tr><td><strong>CNN</strong></td><td>Redes convolucionais para imagens</td></tr>
+          <tr><td><strong>RNN / LSTM</strong></td><td>Redes sequenciais, predecessoras do Transformer; limitadas pelo tamanho da sequência</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Casos de uso de negócio e métricas</h2>
+      <p>
+        Aplicações comuns de IA generativa: chatbots e assistentes virtuais, resumo, tradução, geração de código,
+        criação de conteúdo, geração de imagem, busca e recuperação de conhecimento, personalização, processamento
+        de documentos, e desvio de atendimento ao cliente.
+      </p>
+      <p>Métricas de negócio que você pode ter que associar a um caso de uso:</p>
+      <table>
+        <thead><tr><th>Métrica</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>Satisfação do usuário / CSAT</td><td>Os usuários estão satisfeitos com as respostas geradas</td></tr>
+          <tr><td>Receita média por usuário (ARPU)</td><td>Impacto de receita da funcionalidade</td></tr>
+          <tr><td>Desempenho entre domínios</td><td>O modelo se sustenta fora do seu domínio principal</td></tr>
+          <tr><td>Taxa de conversão</td><td>A IA gerou a ação desejada</td></tr>
+          <tr><td>Eficiência / custo por tarefa</td><td>Redução de esforço humano ou custo</td></tr>
+          <tr><td>Time to market</td><td>Velocidade de lançar a funcionalidade</td></tr>
+          <tr><td>ROI</td><td>Retorno geral em relação ao investimento</td></tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <p class="footnote">
+      Capítulo 3 de 11 — <a href="ai-practitioner.html">voltar aos capítulos</a>.
+    </p>
+  </div>
+</body>
+</html>
